@@ -29,7 +29,7 @@ public class GestorVehiculos {
     public Vehiculo buscarVehiculo(String chasis) {
         return catalogo.buscarPorCodigo(chasis)
                 .orElseThrow(() -> new NoSuchElementException(
-                        "No existe vehículo buscado"));
+                        "No existe vehículo buscado en la flota"));
     }
 
     public boolean validarDisponibilidad(Vehiculo v) {
