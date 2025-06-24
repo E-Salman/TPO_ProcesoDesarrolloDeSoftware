@@ -6,5 +6,5 @@ public class EntregaADomicilio implements EstrategiaEntrega {
     public void entregar() {
         System.out.println("El vehículo será entregado al domicilio del cliente.");
     }
-}
 
+}
