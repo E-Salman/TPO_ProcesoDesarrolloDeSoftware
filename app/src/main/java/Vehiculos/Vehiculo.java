@@ -1,7 +1,5 @@
 package Vehiculos;
 
-import DetallesPago.DetallesPago;
-
 public abstract class Vehiculo {
     private String marca;
     private String modelo;

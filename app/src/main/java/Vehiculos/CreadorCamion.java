@@ -1,7 +1,5 @@
 package Vehiculos;
 
-import Vehiculos.*;
-
 public class CreadorCamion extends CreadorVehiculo {
     @Override
     public Vehiculo crearVehiculo(

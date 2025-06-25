@@ -1,8 +1,5 @@
 package Vehiculos;
 
-import DetallesPago.DetPagoMoto;
-import Vehiculos.*;
-
 public class Moto extends Vehiculo {
     public Moto(
             String marca,

@@ -1,7 +1,5 @@
 package Vehiculos;
 
-import Vehiculos.*;
-
 public abstract class CreadorVehiculo {
 
     public abstract Vehiculo crearVehiculo(
