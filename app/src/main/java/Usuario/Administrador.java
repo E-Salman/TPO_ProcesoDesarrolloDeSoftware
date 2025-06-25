@@ -1,5 +1,4 @@
-package Modelo;
-
+package Usuario;
 
 public class Administrador extends Usuario {
 

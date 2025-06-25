@@ -1,4 +1,5 @@
 package Modelo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,8 @@ import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.Observador;
+import Vehiculos.Vehiculo;
+import FormaPago.FormaPago;
 
 public class PedidoCompra {
     private int numero;
@@ -19,7 +22,8 @@ public class PedidoCompra {
     private EstrategiaEntrega estrategiaEntrega;
     private FormaPago formaPago;
 
-    public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega, FormaPago formaPago) {
+    public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
+            FormaPago formaPago) {
         this.numero = numero;
         estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
@@ -32,29 +36,29 @@ public class PedidoCompra {
         this.formaPago = formaPago;
     }
 
-    public void agregarObservador(Observador observador){
-        observadores.add(observador);        
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
     }
 
-    public void quitarObservador(Observador observador){
+    public void quitarObservador(Observador observador) {
         observadores.remove(observador);
     }
 
-    public void notificarObservadores(){
-        for (Observador observador : observadores){
+    public void notificarObservadores() {
+        for (Observador observador : observadores) {
             observador.actualizar(this);
         }
     }
-    
+
     public void cambiarEstado(String nEstado) {
         EstadoPedido temp = estadoActual.cambiar(nEstado);
-        if (temp != null){
+        if (temp != null) {
             estadoActual = temp;
             historialEstados.add(estadoActual);
-        }        
+        }
     }
 
-    public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega){
+    public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega) {
         this.estrategiaEntrega = estrategiaEntrega;
     }
 
@@ -77,7 +81,7 @@ public class PedidoCompra {
     public void setHistorialEstados(List<EstadoPedido> historialEstados) {
         this.historialEstados = historialEstados;
     }
-    
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -117,4 +121,9 @@ public class PedidoCompra {
     public void setFormaPago(FormaPago formaPago) {
         this.formaPago = formaPago;
     }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
 }

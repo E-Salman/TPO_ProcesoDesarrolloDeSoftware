@@ -6,7 +6,7 @@ public class NotificadorArea implements Observador {
     @Override
     public void actualizar(PedidoCompra pedido) {
         String mensaje = String.format(
-                "ATENCIÓN ÁREAS: el pedido %s cambió a estado %s",
+                "ATENCIÓN ÁREAS: el pedido %d cambió a estado %s",
                 pedido.getNumero(),
                 pedido.getEstadoActual());
         enviarCorreoInterno("ventas@autoplus.com", mensaje);

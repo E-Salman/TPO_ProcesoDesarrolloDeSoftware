@@ -1,4 +1,5 @@
 package Observador;
+
 import Modelo.Cliente;
 import Modelo.PedidoCompra;
 

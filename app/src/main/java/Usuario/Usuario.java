@@ -1,5 +1,4 @@
-package Modelo;
-
+package Usuario;
 
 public abstract class Usuario {
     protected String nombre;

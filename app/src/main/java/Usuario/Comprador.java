@@ -1,5 +1,8 @@
-package Modelo;
+package Usuario;
+
 import java.util.List;
+
+import Modelo.PedidoCompra;
 
 public class Comprador extends Usuario {
 
