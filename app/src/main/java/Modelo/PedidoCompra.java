@@ -1,12 +1,19 @@
-package tpo_procesodesarrollodesoftware;
+package Modelo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+
+import Estado.EstadoPedido;
+import Estado.Reservado;
+import EstrategiaEntrega.EstrategiaEntrega;
+import Observador.Observador;
 
 public class PedidoCompra {
     private int numero;
     private EstadoPedido estadoActual;
     private List<EstadoPedido> historialEstados;
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
     private Cliente cliente;
     private Vehiculo vehiculo;
     private List<Observador> observadores;
@@ -19,16 +26,12 @@ public class PedidoCompra {
         estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
         historialEstados.add(estadoActual);
-        fechaCreacion = DateTime.Today();
+        fechaCreacion = LocalDateTime.now();
         this.cliente = cliente;
         this.vehiculo = vehiculo;
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
         this.formaPago = formaPago;
-    }
-
-    public void agregarObservador(Observador observador) {
-        observadores.add(observador);
     }
 
     public void quitarObservador(Observador observador) {
@@ -42,8 +45,11 @@ public class PedidoCompra {
     }
 
     public void cambiarEstado(String nEstado) {
-        estadoActual.cambiar(nEstado);
-        historialEstados.add(estadoActual);
+        EstadoPedido temp = estadoActual.cambiar(nEstado);
+        if (temp != null) {
+            estadoActual = temp;
+            historialEstados.add(estadoActual);
+        }
     }
 
     public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega) {
@@ -68,14 +74,6 @@ public class PedidoCompra {
 
     public void setHistorialEstados(List<EstadoPedido> historialEstados) {
         this.historialEstados = historialEstados;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
     }
 
     public Cliente getCliente() {

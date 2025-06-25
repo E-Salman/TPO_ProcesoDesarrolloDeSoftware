@@ -1,13 +1,12 @@
-import java.util.List;
+package Modelo;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class GestorVehiculos {
 
     private final CatalogoVehiculos catalogo;
 
-    public GestorVehiculos(CatalogoVehiculos catalogo) {
-        this.catalogo = catalogo;
+    public GestorVehiculos() {
+        catalogo = new CatalogoVehiculos();
     }
 
     public void registrarVehiculo(Vehiculo v) {
@@ -20,7 +19,7 @@ public class GestorVehiculos {
 
     public String listarTodos() {
         StringBuilder lista = new StringBuilder();
-        for (Vehiculo v : catalogo.getVehiculos) {
+        for (Vehiculo v : catalogo.getVehiculos()) {
             lista.append(v).append("\n");
         }
         return lista.toString();
@@ -30,10 +29,6 @@ public class GestorVehiculos {
         return catalogo.buscarPorCodigo(chasis)
                 .orElseThrow(() -> new NoSuchElementException(
                         "No existe vehículo buscado en la flota"));
-    }
-
-    public boolean validarDisponibilidad(Vehiculo v) {
-        return v.isDisponible();
     }
 
     public boolean eliminarVehiculo(String chasis) {

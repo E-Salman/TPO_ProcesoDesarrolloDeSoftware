@@ -1,4 +1,5 @@
-package tpo_procesodesarrollodesoftware;
+package Modelo;
+
 
 public class CreadorAdministrador extends CreadorUsuario {
     @Override

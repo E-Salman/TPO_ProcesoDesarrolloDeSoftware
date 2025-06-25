@@ -1,5 +1,4 @@
-package tpo_procesodesarrollodesoftware;
-
+package Modelo;
 import java.util.List;
 
 public class Comprador extends Usuario {

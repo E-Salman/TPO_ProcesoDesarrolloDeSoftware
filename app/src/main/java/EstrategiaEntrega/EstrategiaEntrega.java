@@ -1,4 +1,4 @@
-package tpo_procesodesarrollodesoftware;
+package EstrategiaEntrega;
 
 public interface EstrategiaEntrega {
     void entregar();
