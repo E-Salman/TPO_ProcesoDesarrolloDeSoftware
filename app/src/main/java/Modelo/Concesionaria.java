@@ -232,11 +232,11 @@ public class Concesionaria {
             }
         } while (opcion != 0);
     }
-    
+
     List<Usuario> compradores = new ArrayList<Usuario>();
     List<Usuario> administradores = new ArrayList<Usuario>();
     List<Usuario> vendedores = new ArrayList<Usuario>();
-    
+
     private void registrarPedido(Scanner sc) {
         System.out.println("\n--- Registro de Pedido ---");
 
@@ -271,13 +271,13 @@ public class Concesionaria {
 
             System.out.print("Ingrese telefono del cliente: ");
             String telefono = sc.nextLine();
-            
+
             clientePedido = new Cliente(nombre, apellido, dni, email, telefono);
             creadorComprador.setCliente(clientePedido);
             creadorComprador.crearUsuario(nombre, email);
             compradores.add(creadorComprador.crearUsuario(nombre, email));
         }
-        
+
         System.out.println("\nVehículos disponibles:");
         List<Vehiculo> disponibles = catalogoVehiculos.getVehiculos();
         for (int i = 0; i < disponibles.size(); i++) {
@@ -294,11 +294,11 @@ public class Concesionaria {
         int tipoEntrega = sc.nextInt();
         sc.nextLine();
         EstrategiaEntrega estrategiaEntrega;
-            if (tipoEntrega == 1) {
-                estrategiaEntrega = new EntregaEnConcesionaria();
-            } else {
-                estrategiaEntrega = new EntregaADomicilio();
-}
+        if (tipoEntrega == 1) {
+            estrategiaEntrega = new EntregaEnConcesionaria();
+        } else {
+            estrategiaEntrega = new EntregaADomicilio();
+        }
         System.out.println("\nSeleccione forma de pago:");
         System.out.println("1. Tarjeta");
         System.out.println("2. Transferencia");
@@ -338,7 +338,7 @@ public class Concesionaria {
                 estrategiaEntrega,
                 formaPago,
                 datosFact,
-                (Vendedor)usuarioLogueado,
+                (Vendedor) usuarioLogueado,
                 equipamiento,
                 garantia,
                 accesorios);
@@ -351,7 +351,7 @@ public class Concesionaria {
         return LocalDateTime.parse(sc.nextLine());
     }
 
-    private void menuGenerarInforme(){
+    private void menuGenerarInforme() {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("=== MENÚ PRINCIPAL ===");
@@ -369,7 +369,7 @@ public class Concesionaria {
                     String rutaCsv = sc.nextLine();
 
                     try {
-                        ((Administrador)usuarioLogueado).generarInformeCSV(desde, hasta, estado, rutaCsv);
+                        ((Administrador) usuarioLogueado).generarInformeCSV(desde, hasta, estado, rutaCsv);
                         System.out.println("Informe CSV generado en " + rutaCsv);
                     } catch (IOException e) {
                         System.err.println("Error al exportar CSV: " + e.getMessage());
@@ -384,7 +384,7 @@ public class Concesionaria {
                     String rutaTxt = sc.nextLine();
 
                     try {
-                       ((Administrador)usuarioLogueado).generarInformeTXT(d2, h2, estado, rutaTxt);
+                        ((Administrador) usuarioLogueado).generarInformeTXT(d2, h2, estado, rutaTxt);
                         System.out.println("Informe TXT generado en " + rutaTxt);
                     } catch (IOException e) {
                         System.err.println("Error al exportar TXT: " + e.getMessage());
