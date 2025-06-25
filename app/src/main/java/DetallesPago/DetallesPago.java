@@ -1,6 +1,6 @@
 package DetallesPago;
 
-import Modelo.Vehiculo;
+import Vehiculos.Vehiculo;
 
 public abstract class DetallesPago  {
     private double precioBase;
