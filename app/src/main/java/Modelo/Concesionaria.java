@@ -108,12 +108,10 @@ public class Concesionaria {
         switch (tipo) {
             case "admin":
                 nuevo = creadorAdministrador.crearUsuario(nombre, email);
-                administradores.add(creadorAdministrador.crearUsuario(nombre, email));
                 break;
 
             case "vendedor":
                 nuevo = creadorVendedor.crearUsuario(nombre, email);
-                vendedores.add(creadorVendedor.crearUsuario(nombre, email));
                 break;
 
             case "comprador":
@@ -127,7 +125,6 @@ public class Concesionaria {
                 String telefono = sc.nextLine();
                 creadorComprador.setCliente(new Cliente(nombre, apellido, dni, email, telefono));
                 nuevo = creadorComprador.crearUsuario(nombre, email);
-                compradores.add(creadorComprador.crearUsuario(nombre, email));
                 break;
 
             default:
@@ -140,11 +137,11 @@ public class Concesionaria {
     }
 
     private Usuario login(Scanner sc) {
-        System.out.print("Ingrese nombre de usuario: ");
-        String nombre = sc.nextLine();
+        System.out.print("Ingrese su email: ");
+        String email = sc.nextLine();
 
         for (Usuario u : usuarios) {
-            if (u.getNombre().equals(nombre)) {
+            if (u.getEmail().equals(email)) {
                 System.out.println("Login exitoso como " + u.getClass().getSimpleName());
                 return u;
             }
@@ -179,10 +176,10 @@ public class Concesionaria {
 
             switch (opcion) {
                 case 1:
-                    catalogoVehiculos.toString();
+                    System.out.println(catalogoVehiculos.smallString());
                     break;
                 case 2:
-                    gestorPedidos.crearPedido(null, null, null, null, null, null, false, false, false);
+                    registrarPedido(sc);
                     break;
                 case 3:
                     gestorPedidos.listarPedidos().toString();
@@ -207,11 +204,11 @@ public class Concesionaria {
 
             switch (opcion) {
                 case 1:
-                    catalogoVehiculos.toString();
+                    System.out.println(catalogoVehiculos.toString());;
                     break;
 
                 case 2:
-                    gestorPedidos.listarPedidosComprador(comprador).toString();
+                    System.out.println(gestorPedidos.listarPedidosComprador(comprador).toString());
                     break;
             }
         } while (opcion != 0);
@@ -232,10 +229,6 @@ public class Concesionaria {
             }
         } while (opcion != 0);
     }
-
-    List<Usuario> compradores = new ArrayList<Usuario>();
-    List<Usuario> administradores = new ArrayList<Usuario>();
-    List<Usuario> vendedores = new ArrayList<Usuario>();
 
     private void registrarPedido(Scanner sc) {
         System.out.println("\n--- Registro de Pedido ---");
@@ -275,7 +268,6 @@ public class Concesionaria {
             clientePedido = new Cliente(nombre, apellido, dni, email, telefono);
             creadorComprador.setCliente(clientePedido);
             creadorComprador.crearUsuario(nombre, email);
-            compradores.add(creadorComprador.crearUsuario(nombre, email));
         }
 
         System.out.println("\nVehículos disponibles:");

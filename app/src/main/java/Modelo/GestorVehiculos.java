@@ -13,10 +13,7 @@ public class GestorVehiculos {
     }
 
     public GestorVehiculos(CatalogoVehiculos catalogo) {
-        System.out.println(catalogo.toString());
-        System.out.println(this.catalogo);         
-        this.catalogo = new CatalogoVehiculos();
-        System.out.println(this.catalogo.toString());
+        this.catalogo = catalogo;
     }
 
     public void registrarVehiculo(Vehiculo v) {
