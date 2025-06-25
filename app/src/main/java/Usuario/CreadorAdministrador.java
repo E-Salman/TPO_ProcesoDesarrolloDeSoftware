@@ -1,16 +1,16 @@
 package Usuario;
 
+import Modelo.ReportesPedidos;
+
 public class CreadorAdministrador extends CreadorUsuario {
+    private final ReportesPedidos servicioReportes;
+
+    public CreadorAdministrador(ReportesPedidos servicioReportes) {
+        this.servicioReportes = servicioReportes;
+    }
+
     @Override
     public Usuario crearUsuario(String nombre, String email) {
-        return new Administrador(nombre, email);
-    }
-
-    public void generarInforme() {
-        System.out.println("CreadorAdministrador: Generando informe.");
-    }
-
-    public void gestionarClientes() {
-        System.out.println("CreadorAdministrador: Gestionando clientes.");
+        return new Administrador(nombre, email, servicioReportes);
     }
 }
