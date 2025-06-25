@@ -1,14 +1,17 @@
+package Modelo;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import Vehiculos.Vehiculo;
 
 public class CatalogoVehiculos {
 
     private final List<Vehiculo> vehiculos = new ArrayList<>();
 
     public List<Vehiculo> getVehiculos() {
-        return Collections.unmodifiableList(vehiculos);
+        return vehiculos;
     }
 
     public void agregarVehiculo(Vehiculo v) {
@@ -33,4 +36,11 @@ public class CatalogoVehiculos {
                 .findFirst();
     }
 
+    public String toString(){
+        String retVal = "";
+        for (Vehiculo vehiculo : vehiculos){
+            retVal += vehiculo.toString();
+        }
+        return retVal;
+    }
 }
