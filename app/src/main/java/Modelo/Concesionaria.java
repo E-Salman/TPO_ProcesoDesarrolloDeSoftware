@@ -1,7 +1,9 @@
 package Modelo;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -182,10 +184,10 @@ public class Concesionaria {
                     registrarPedido(sc);
                     break;
                 case 3:
-                    gestorPedidos.listarPedidos().toString();
+                    System.out.println(gestorPedidos.listarPedidos().toString());
                     break;
                 case 4:
-                    // lógica de generar informe
+                    menuGenerarInforme();
                     break;
             }
         } while (opcion != 0);
@@ -204,7 +206,8 @@ public class Concesionaria {
 
             switch (opcion) {
                 case 1:
-                    System.out.println(catalogoVehiculos.toString());;
+                    System.out.println(catalogoVehiculos.toString());
+                    ;
                     break;
 
                 case 2:
@@ -246,8 +249,10 @@ public class Concesionaria {
                     break;
                 }
             }
-            if (clientePedido == null)
+            if (clientePedido == null){
+                System.out.println("No se encontro el email registrado");
                 return;
+            }                
 
         } else {
             System.out.print("Ingrese nombre del cliente: ");
@@ -330,17 +335,27 @@ public class Concesionaria {
                 estrategiaEntrega,
                 formaPago,
                 datosFact,
-                (Vendedor) usuarioLogueado,
+                usuarioLogueado,
                 equipamiento,
                 garantia,
                 accesorios);
 
-        System.out.println("\n✅ Pedido registrado con éxito.");
+        System.out.println("\nPedido registrado con éxito.");
     }
 
-    private LocalDateTime pedirFecha(Scanner sc, String prompt) {
-        System.out.print(prompt);
-        return LocalDateTime.parse(sc.nextLine());
+    private LocalDate pedirFechaLocalDate(Scanner sc, String prompt) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha = null;
+        while (fecha == null) {
+            System.out.print(prompt);
+            String línea = sc.nextLine();
+            try {
+                fecha = LocalDate.parse(línea, fmt);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Usar: AAAA-MM-DD");
+            }
+        }
+        return fecha;
     }
 
     private void menuGenerarInforme() {
@@ -354,11 +369,12 @@ public class Concesionaria {
 
             switch (op) {
                 case 1:
-                    LocalDateTime desde = pedirFecha(sc, "Fecha desde (YYYY-MM-DDTHH:MM): ");
-                    LocalDateTime hasta = pedirFecha(sc, "Fecha hasta (YYYY-MM-DDTHH:MM): ");
+                    LocalDate desde = pedirFechaLocalDate(sc, "Fecha desde (YYYY-MM-DD): ");
+                    LocalDate hasta = pedirFechaLocalDate(sc, "Fecha hasta (YYYY-MM-DD): ");
                     EstadoPedido estado = null;
                     System.out.print("Ruta CSV: ");
                     String rutaCsv = sc.nextLine();
+                    //String rutaCsv = "C:\\temp\\reporte.csv";
 
                     try {
                         ((Administrador) usuarioLogueado).generarInformeCSV(desde, hasta, estado, rutaCsv);
@@ -370,8 +386,8 @@ public class Concesionaria {
 
                 case 2:
                     estado = null;
-                    LocalDateTime d2 = pedirFecha(sc, "Fecha desde: ");
-                    LocalDateTime h2 = pedirFecha(sc, "Fecha hasta: ");
+                    LocalDate d2 = pedirFechaLocalDate(sc, "Fecha desde (YYYY-MM-DD): ");
+                    LocalDate h2 = pedirFechaLocalDate(sc, "Fecha hasta (YYYY-MM-DD): ");
                     System.out.print("Ruta TXT: ");
                     String rutaTxt = sc.nextLine();
 

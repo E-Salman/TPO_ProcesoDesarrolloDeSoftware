@@ -13,6 +13,7 @@ import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.Observador;
+import Usuario.Usuario;
 import Usuario.Vendedor;
 import Vehiculos.Vehiculo;
 import FormaPago.FormaPago;
@@ -28,7 +29,7 @@ public class PedidoCompra {
     private EstrategiaEntrega estrategiaEntrega;
     private FormaPago formaPago;
     private DatosFacturacion datosFacturacion;
-    private Vendedor vendedor;
+    private Usuario vendedor;
     private boolean equipamientoExtra;
     private boolean garantiaExtendida;
     private boolean accesorios;
@@ -38,7 +39,7 @@ public class PedidoCompra {
 
 
     public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
-            FormaPago formaPago, DatosFacturacion datosFacturacion, Vendedor vendedor, boolean equipamientoExtra,
+            FormaPago formaPago, DatosFacturacion datosFacturacion, Usuario vendedor, boolean equipamientoExtra,
             boolean garantiaExtendida, boolean accesorios) {
                 
         this.numero = numero;
@@ -191,11 +192,11 @@ public class PedidoCompra {
         this.datosFacturacion = datosFacturacion;
     }
 
-    public Vendedor getVendedor() {
+    public Usuario getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(Vendedor vendedor) {
+    public void setVendedor(Usuario vendedor) {
         this.vendedor = vendedor;
     }
 
