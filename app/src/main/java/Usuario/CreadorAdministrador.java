@@ -1,5 +1,4 @@
-package Modelo;
-
+package Usuario;
 
 public class CreadorAdministrador extends CreadorUsuario {
     @Override

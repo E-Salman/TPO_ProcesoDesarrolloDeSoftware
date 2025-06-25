@@ -1,11 +1,14 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.NotificadorArea;
 import Observador.NotificadorCliente;
+import Vehiculos.Vehiculo;
+import FormaPago.FormaPago;
 
 public class GestorPedidos {
     private final List<PedidoCompra> pedidos = new ArrayList<>();
@@ -21,5 +24,9 @@ public class GestorPedidos {
 
     public void cambiarEstado(PedidoCompra pedido, String estado) {
         pedido.cambiarEstado(estado);
+    }
+
+    public List<PedidoCompra> listarPedidos() {
+        return Collections.unmodifiableList(pedidos);
     }
 }

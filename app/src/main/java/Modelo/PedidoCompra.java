@@ -8,6 +8,8 @@ import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.Observador;
+import Vehiculos.Vehiculo;
+import FormaPago.FormaPago;
 
 public class PedidoCompra {
     private int numero;
@@ -32,6 +34,10 @@ public class PedidoCompra {
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
         this.formaPago = formaPago;
+    }
+
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
     }
 
     public void quitarObservador(Observador observador) {
@@ -115,4 +121,9 @@ public class PedidoCompra {
     public void setFormaPago(FormaPago formaPago) {
         this.formaPago = formaPago;
     }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
 }

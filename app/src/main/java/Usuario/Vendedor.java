@@ -1,7 +1,8 @@
-package Modelo;
-
+package Usuario;
 
 import java.util.List;
+
+import Vehiculos.Vehiculo;
 
 public class Vendedor extends Usuario {
 

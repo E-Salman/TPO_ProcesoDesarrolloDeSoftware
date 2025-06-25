@@ -1,5 +1,8 @@
 package Modelo;
+
 import java.util.NoSuchElementException;
+
+import Vehiculos.Vehiculo;
 
 public class GestorVehiculos {
 
