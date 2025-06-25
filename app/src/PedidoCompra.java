@@ -11,11 +11,12 @@ public class PedidoCompra {
     private Vehiculo vehiculo;
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
+    private FormaPago formaPago;
 
-    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo,
-            EstrategiaEntrega estrategiaEntrega) {
+    public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
+            FormaPago formaPago) {
         this.numero = numero;
-        this.estadoActual = estadoActual;
+        estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
         historialEstados.add(estadoActual);
         fechaCreacion = DateTime.Today();
@@ -23,13 +24,30 @@ public class PedidoCompra {
         this.vehiculo = vehiculo;
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
+        this.formaPago = formaPago;
     }
 
-    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo,
-            List<Observador> observadores, EstrategiaEntrega estrategiaEntrega) {
-        this.numero = numero;
-        this.estadoActual = estadoActual;
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
+    }
 
+    public void quitarObservador(Observador observador) {
+        observadores.remove(observador);
+    }
+
+    public void notificarObservadores() {
+        for (Observador observador : observadores) {
+            observador.actualizar(this);
+        }
+    }
+
+    public void cambiarEstado(String nEstado) {
+        estadoActual.cambiar(nEstado);
+        historialEstados.add(estadoActual);
+    }
+
+    public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega) {
+        this.estrategiaEntrega = estrategiaEntrega;
     }
 
     public int getNumero() {
@@ -42,10 +60,6 @@ public class PedidoCompra {
 
     public EstadoPedido getEstadoActual() {
         return estadoActual;
-    }
-
-    public void setEstadoActual(EstadoPedido estadoActual) {
-        this.estadoActual = estadoActual;
     }
 
     public List<EstadoPedido> getHistorialEstados() {
@@ -88,11 +102,19 @@ public class PedidoCompra {
         this.observadores = observadores;
     }
 
-    public void agregarObservador(Observador observador) {
-        observadores.add(observador);
+    public EstrategiaEntrega getEstrategiaEntrega() {
+        return estrategiaEntrega;
     }
 
-    public void quitarObservador(Observador observador) {
-        observadores.remove(observador);
+    public void setEstrategiaEntrega(EstrategiaEntrega estrategiaEntrega) {
+        this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public FormaPago getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(FormaPago formaPago) {
+        this.formaPago = formaPago;
     }
 }
