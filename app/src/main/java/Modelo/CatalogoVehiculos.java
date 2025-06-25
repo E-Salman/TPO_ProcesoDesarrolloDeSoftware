@@ -36,6 +36,14 @@ public class CatalogoVehiculos {
                 .findFirst();
     }
 
+    public String smallString(){
+        String retVal = "";
+        for (Vehiculo vehiculo : vehiculos){
+            retVal += "\n#Motor: " + vehiculo.getNumeroMotor() + " Marca: " + vehiculo.getMarca() + " Precio: " + vehiculo.getPrecioBase();
+        }
+        return retVal;
+    }
+
     public String toString(){
         String retVal = "";
         for (Vehiculo vehiculo : vehiculos){
