@@ -1,7 +1,7 @@
 package Usuario;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import Estado.EstadoPedido;
@@ -18,22 +18,22 @@ public class Administrador extends Usuario {
         this.servicioReportes = servicioReportes;
     }
 
-    public List<PedidoCompra> generarInforme(LocalDateTime desde,
-            LocalDateTime hasta,
+    public List<PedidoCompra> generarInforme(LocalDate desde,
+            LocalDate hasta,
             EstadoPedido estado) {
         return servicioReportes.generarInforme(desde, hasta, estado);
     }
 
-    public void generarInformeCSV(LocalDateTime desde,
-            LocalDateTime hasta,
+    public void generarInformeCSV(LocalDate desde,
+            LocalDate hasta,
             EstadoPedido estado,
             String rutaArchivo) throws IOException {
         List<PedidoCompra> pedidos = servicioReportes.generarInforme(desde, hasta, estado);
         servicioReportes.exportarCSV(pedidos, rutaArchivo);
     }
 
-    public void generarInformeTXT(LocalDateTime desde,
-            LocalDateTime hasta,
+    public void generarInformeTXT(LocalDate desde,
+            LocalDate hasta,
             EstadoPedido estado,
             String rutaArchivo) throws IOException {
         List<PedidoCompra> pedidos = servicioReportes.generarInforme(desde, hasta, estado);

@@ -1,7 +1,10 @@
 package Modelo;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -204,7 +207,8 @@ public class Concesionaria {
 
             switch (opcion) {
                 case 1:
-                    System.out.println(catalogoVehiculos.toString());;
+                    System.out.println(catalogoVehiculos.toString());
+                    ;
                     break;
 
                 case 2:
@@ -338,11 +342,6 @@ public class Concesionaria {
         System.out.println("\n✅ Pedido registrado con éxito.");
     }
 
-    private LocalDateTime pedirFecha(Scanner sc, String prompt) {
-        System.out.print(prompt);
-        return LocalDateTime.parse(sc.nextLine());
-    }
-
     private void menuGenerarInforme() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -354,8 +353,8 @@ public class Concesionaria {
 
             switch (op) {
                 case 1:
-                    LocalDateTime desde = pedirFecha(sc, "Fecha desde (YYYY-MM-DDTHH:MM): ");
-                    LocalDateTime hasta = pedirFecha(sc, "Fecha hasta (YYYY-MM-DDTHH:MM): ");
+                    LocalDate desde = pedirFechaLocalDate(sc, "Fecha desde (YYYY-MM-DD): ");
+                    LocalDate hasta = pedirFechaLocalDate(sc, "Fecha hasta (YYYY-MM-DD): ");
                     EstadoPedido estado = null;
                     System.out.print("Ruta CSV: ");
                     String rutaCsv = sc.nextLine();
@@ -370,8 +369,8 @@ public class Concesionaria {
 
                 case 2:
                     estado = null;
-                    LocalDateTime d2 = pedirFecha(sc, "Fecha desde: ");
-                    LocalDateTime h2 = pedirFecha(sc, "Fecha hasta: ");
+                    LocalDate d2 = pedirFechaLocalDate(sc, "Fecha desde (YYYY-MM-DD): ");
+                    LocalDate h2 = pedirFechaLocalDate(sc, "Fecha hasta (YYYY-MM-DD): ");
                     System.out.print("Ruta TXT: ");
                     String rutaTxt = sc.nextLine();
 
@@ -390,6 +389,21 @@ public class Concesionaria {
                     System.out.println("Opción inválida");
             }
         }
+    }
+
+    private LocalDate pedirFechaLocalDate(Scanner sc, String prompt) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha = null;
+        while (fecha == null) {
+            System.out.print(prompt);
+            String línea = sc.nextLine();
+            try {
+                fecha = LocalDate.parse(línea, fmt);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Usar: AAAA-MM-DD");
+            }
+        }
+        return fecha;
     }
 
     public String getNombre() {

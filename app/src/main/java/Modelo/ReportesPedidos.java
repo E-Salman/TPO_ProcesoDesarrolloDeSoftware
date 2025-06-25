@@ -3,7 +3,7 @@ package Modelo;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import Estado.EstadoPedido;
@@ -15,10 +15,8 @@ public class ReportesPedidos {
         this.gestorPedidos = gestorPedidos;
     }
 
-    public List<PedidoCompra> generarInforme(LocalDateTime desde, LocalDateTime hasta, EstadoPedido estado) {
+    public List<PedidoCompra> generarInforme(LocalDate desde, LocalDate hasta, EstadoPedido estado) {
         return gestorPedidos.listarPedidos().stream()
-                .filter(p -> !p.getFechaCreacion().isBefore(desde))
-                .filter(p -> !p.getFechaCreacion().isAfter(hasta))
                 .filter(p -> estado == null || p.getEstadoActual().equals(estado))
                 .collect(Collectors.toList());
     }

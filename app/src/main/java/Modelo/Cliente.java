@@ -63,8 +63,4 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public EstrategiaEntrega getEstrategiaEntrega() {
-        return estrategiaEntrega;
-    }
-
 }
