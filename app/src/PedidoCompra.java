@@ -1,5 +1,7 @@
 package tpo_procesodesarrollodesoftware;
 
+import java.util.ArrayList;
+
 public class PedidoCompra {
     private int numero;
     private EstadoPedido estadoActual;
@@ -10,10 +12,51 @@ public class PedidoCompra {
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
 
-    public PedidoCompra(int numero, EstadoPedido estadoActual) {
+    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega) {
         this.numero = numero;
         this.estadoActual = estadoActual;
-        
+        historialEstados = new ArrayList<EstadoPedido>();
+        historialEstados.add(estadoActual);
+        fechaCreacion = DateTime.Today();
+        this.cliente = cliente;
+        this.vehiculo = vehiculo;
+        observadores = new ArrayList<Observador>();
+        this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo, List<Observador> observadores, EstrategiaEntrega estrategiaEntrega) {
+        this.numero = numero;
+        this.estadoActual = estadoActual;
+        historialEstados = new ArrayList<EstadoPedido>();
+        historialEstados.add(estadoActual);
+        fechaCreacion = DateTime.Today();
+        this.cliente = cliente;
+        this.vehiculo = vehiculo;
+        this.observadores = new ArrayList<Observador>();
+        this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public void agregarObservador(Observador observador){
+        observadores.add(observador);        
+    }
+
+    public void quitarObservador(Observador observador){
+        observadores.remove(observador);
+    }
+
+    public void notificarObservadores(){
+        for (Observador observador : observadores){
+            observador.actualizar(this);
+        }
+    }
+    
+    public void cambiarEstado(String nEstado) {
+        estadoActual.cambiar(nEstado);
+        historialEstados.add(estadoActual);
+    }
+
+    public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega){
+        this.estrategiaEntrega = estrategiaEntrega;
     }
 
     public int getNumero() {
