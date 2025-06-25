@@ -1,5 +1,7 @@
 package tpo_procesodesarrollodesoftware;
 
+import java.util.ArrayList;
+
 public class PedidoCompra {
     private int numero;
     private EstadoPedido estadoActual;
@@ -10,7 +12,21 @@ public class PedidoCompra {
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
 
-    public PedidoCompra(int numero, EstadoPedido estadoActual) {
+    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo,
+            EstrategiaEntrega estrategiaEntrega) {
+        this.numero = numero;
+        this.estadoActual = estadoActual;
+        historialEstados = new ArrayList<EstadoPedido>();
+        historialEstados.add(estadoActual);
+        fechaCreacion = DateTime.Today();
+        this.cliente = cliente;
+        this.vehiculo = vehiculo;
+        observadores = new ArrayList<Observador>();
+        this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo,
+            List<Observador> observadores, EstrategiaEntrega estrategiaEntrega) {
         this.numero = numero;
         this.estadoActual = estadoActual;
 
