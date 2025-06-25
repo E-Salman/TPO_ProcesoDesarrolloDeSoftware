@@ -3,23 +3,23 @@ package DetallesPago;
 import Vehiculos.Vehiculo;
 
 public abstract class DetallesPago  {
-    private double precioBase;
-    private double impNacional;
-    private double impProvincial;
-    private double impProvincialAdicional;
-    private double precioTotal;
+    protected double precioBase;
+    protected double impNacional;
+    protected double impProvincial;
+    protected double impProvincialAdicional;
+    protected double precioTotal;
 
     public DetallesPago(Vehiculo vehiculo){
-        setBase(vehiculo.getPrecioBase());
+        precioBase = vehiculo.getPrecioBase();
+        impProvincial = 0.05;
     }
 
     public DetallesPago(double precio){
-        setBase(precio);
+        precioBase = precio;
     }
 
-    public double calcularPara(){
+    protected void calcularTotal(){
         precioTotal = precioBase + precioBase * impNacional + precioBase * impProvincial + precioBase * impProvincialAdicional;
-        return precioTotal;
     }
 
     public double getBase(){
@@ -28,7 +28,7 @@ public abstract class DetallesPago  {
 
     public void setBase(double precioBase){
         this.precioBase = precioBase;
-        precioTotal = calcularPara();
+        calcularTotal();
     }
     public double getImpNacional(){
         return precioBase * impNacional;
@@ -40,5 +40,9 @@ public abstract class DetallesPago  {
 
     public double getImpProvincialAdicional(){
         return precioBase * impProvincialAdicional;
+    }
+
+    public double getTotal(){
+        return precioTotal;
     }
 }

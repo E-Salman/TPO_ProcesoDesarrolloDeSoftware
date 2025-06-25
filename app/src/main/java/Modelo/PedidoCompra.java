@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import DetallesPago.DetPagoAuto;
+import DetallesPago.DetPagoCamion;
+import DetallesPago.DetPagoCamioneta;
+import DetallesPago.DetPagoMoto;
+import DetallesPago.DetallesPago;
 import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
@@ -21,6 +26,9 @@ public class PedidoCompra {
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
     private FormaPago formaPago;
+    private DetallesPago detallesPago;
+
+
 
     public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
             FormaPago formaPago) {
@@ -34,6 +42,28 @@ public class PedidoCompra {
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
         this.formaPago = formaPago;
+
+        switch (vehiculo.getClass().getName()){
+            case "Auto":
+                detallesPago = new DetPagoAuto(vehiculo);
+                break;
+                            
+            case "Camion":
+                detallesPago = new DetPagoCamion(vehiculo);
+                break;
+
+            case "Camioneta":
+                detallesPago = new DetPagoCamioneta(vehiculo);
+                break;
+
+            case "Moto":
+                detallesPago = new DetPagoMoto(vehiculo);
+                break;
+        }
+    }
+    
+    public DetallesPago getDetallesPago() {
+        return detallesPago;
     }
 
     public void agregarObservador(Observador observador) {
@@ -60,6 +90,10 @@ public class PedidoCompra {
 
     public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega) {
         this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public DetallesPago detallesPago(){
+        return detallesPago;
     }
 
     public int getNumero() {

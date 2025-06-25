@@ -1,6 +1,6 @@
-package vehiculos;
+package Vehiculos;
 
-import estrategia.ImpuestoStrategy;
+import DetallesPago.DetallesPago;
 
 public abstract class Vehiculo {
     private String marca;
@@ -9,7 +9,6 @@ public abstract class Vehiculo {
     private String numeroChasis;
     private String numeroMotor;
     private double precioBase;
-    private ImpuestoStrategy estrategiaImpuestos;
 
     protected Vehiculo(String marca,
             String modelo,
@@ -17,14 +16,13 @@ public abstract class Vehiculo {
             String numeroChasis,
             String numeroMotor,
             double precioBase,
-            ImpuestoStrategy estrategiaImpuestos) {
+            DetallesPago estrategiaImpuestos) {
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
         this.numeroChasis = numeroChasis;
         this.numeroMotor = numeroMotor;
         this.precioBase = precioBase;
-        this.estrategiaImpuestos = estrategiaImpuestos;
     }
 
     public String getMarca() {
@@ -51,19 +49,6 @@ public abstract class Vehiculo {
         return precioBase;
     }
 
-    public ImpuestoStrategy getEstrategiaImpuestos() {
-        return estrategiaImpuestos;
-    }
-
-    public void setEstrategiaImpuestos(ImpuestoStrategy estrategiaImpuestos) {
-        this.estrategiaImpuestos = estrategiaImpuestos;
-    }
-
-    public double calcularTotal() {
-        double impuesto = estrategiaImpuestos.calcularPara(this);
-        return precioBase + impuesto;
-    }
-
     @Override
     public String toString() {
         return "Vehiculo{" +
@@ -72,8 +57,6 @@ public abstract class Vehiculo {
                 ", color='" + color + '\'' +
                 ", chasis='" + numeroChasis + '\'' +
                 ", motor='" + numeroMotor + '\'' +
-                ", precioBase=" + precioBase +
-                ", impuesto=" + estrategiaImpuestos.getClass().getSimpleName() +
-                '}';
+                ", precioBase=" + precioBase + '}';
     }
 }

@@ -36,13 +36,13 @@ public class ReportesPedidos {
             // Filas
             for (PedidoCompra p : pedidos) {
                 writer.write(String.join(";",
-                        p.getNumero(),
+                        String.valueOf(p.getNumero()), // convierte el int a String
                         p.getFechaCreacion().toString(),
                         p.getEstadoActual().estado(),
                         p.getCliente().getNombre(),
                         p.getVehiculo().getNumeroChasis(),
                         p.getFormaPago().getNombre(),
-                        String.format("%.2f", p.calcularTotal())));
+                        String.format("%.2f", p.getDetallesPago().getTotal())));
                 writer.newLine();
             }
         }
