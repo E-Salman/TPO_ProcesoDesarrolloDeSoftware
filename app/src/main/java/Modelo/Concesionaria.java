@@ -137,11 +137,11 @@ public class Concesionaria {
     }
 
     private Usuario login(Scanner sc) {
-        System.out.print("Ingrese nombre de usuario: ");
-        String nombre = sc.nextLine();
+        System.out.print("Ingrese su email: ");
+        String email = sc.nextLine();
 
         for (Usuario u : usuarios) {
-            if (u.getNombre().equals(nombre)) {
+            if (u.getEmail().equals(email)) {
                 System.out.println("Login exitoso como " + u.getClass().getSimpleName());
                 return u;
             }
@@ -204,11 +204,11 @@ public class Concesionaria {
 
             switch (opcion) {
                 case 1:
-                    catalogoVehiculos.toString();
+                    System.out.println(catalogoVehiculos.toString());;
                     break;
 
                 case 2:
-                    gestorPedidos.listarPedidosComprador(comprador).toString();
+                    System.out.println(gestorPedidos.listarPedidosComprador(comprador).toString());
                     break;
             }
         } while (opcion != 0);
