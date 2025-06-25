@@ -11,10 +11,11 @@ public class PedidoCompra {
     private Vehiculo vehiculo;
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
+    private FormaPago formaPago;
 
-    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega) {
+    public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega, FormaPago formaPago) {
         this.numero = numero;
-        this.estadoActual = estadoActual;
+        estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
         historialEstados.add(estadoActual);
         fechaCreacion = DateTime.Today();
@@ -22,18 +23,7 @@ public class PedidoCompra {
         this.vehiculo = vehiculo;
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
-    }
-
-    public PedidoCompra(int numero, EstadoPedido estadoActual, Cliente cliente, Vehiculo vehiculo, List<Observador> observadores, EstrategiaEntrega estrategiaEntrega) {
-        this.numero = numero;
-        this.estadoActual = estadoActual;
-        historialEstados = new ArrayList<EstadoPedido>();
-        historialEstados.add(estadoActual);
-        fechaCreacion = DateTime.Today();
-        this.cliente = cliente;
-        this.vehiculo = vehiculo;
-        this.observadores = new ArrayList<Observador>();
-        this.estrategiaEntrega = estrategiaEntrega;
+        this.formaPago = formaPago;
     }
 
     public void agregarObservador(Observador observador){
@@ -69,10 +59,6 @@ public class PedidoCompra {
 
     public EstadoPedido getEstadoActual() {
         return estadoActual;
-    }
-
-    public void setEstadoActual(EstadoPedido estadoActual) {
-        this.estadoActual = estadoActual;
     }
 
     public List<EstadoPedido> getHistorialEstados() {
@@ -113,5 +99,21 @@ public class PedidoCompra {
 
     public void setObservadores(List<Observador> observadores) {
         this.observadores = observadores;
+    }
+
+    public EstrategiaEntrega getEstrategiaEntrega() {
+        return estrategiaEntrega;
+    }
+
+    public void setEstrategiaEntrega(EstrategiaEntrega estrategiaEntrega) {
+        this.estrategiaEntrega = estrategiaEntrega;
+    }
+
+    public FormaPago getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(FormaPago formaPago) {
+        this.formaPago = formaPago;
     }
 }
