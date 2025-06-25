@@ -13,7 +13,7 @@ public class PedidoCompra {
     public PedidoCompra(int numero, EstadoPedido estadoActual) {
         this.numero = numero;
         this.estadoActual = estadoActual;
-        
+
     }
 
     public int getNumero() {
@@ -70,5 +70,13 @@ public class PedidoCompra {
 
     public void setObservadores(List<Observador> observadores) {
         this.observadores = observadores;
+    }
+
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
+    }
+
+    public void quitarObservador(Observador observador) {
+        observadores.remove(observador);
     }
 }

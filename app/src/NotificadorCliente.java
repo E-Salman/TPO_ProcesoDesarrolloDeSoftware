@@ -12,8 +12,8 @@ public class NotificadorCliente implements Observer {
         String mensaje = String.format(
                 "Hola %s, tu pedido %d ahora está en estado: %s",
                 cliente.getNombre(),
-                pedido.getId(),
-                pedido.getEstadoActual().getNombreEstado());
+                pedido.getNumero(),
+                pedido.getEstadoActual().estado());
         enviarCorreo(cliente.getEmail(), mensaje);
     }
 
