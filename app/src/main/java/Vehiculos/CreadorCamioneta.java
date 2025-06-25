@@ -2,7 +2,7 @@ package Vehiculos;
 
 import Vehiculos.*;
 
-public class CreadorAuto extends CreadorVehiculo {
+public class CreadorCamioneta extends CreadorVehiculo {
     @Override
     public Vehiculo crearVehiculo(
             String marca,
@@ -11,7 +11,7 @@ public class CreadorAuto extends CreadorVehiculo {
             String numeroChasis,
             String numeroMotor,
             double precioBase) {
-        return new Auto(
+        return new Camioneta(
                 marca,
                 modelo,
                 color,

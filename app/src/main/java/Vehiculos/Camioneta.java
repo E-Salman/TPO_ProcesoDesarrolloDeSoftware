@@ -1,10 +1,10 @@
 package Vehiculos;
 
-import DetallesPago.DetPagoAuto;
+import DetallesPago.DetPagoCamioneta;
 import Vehiculos.*;
 
-public class Auto extends Vehiculo {
-    public Auto(
+public class Camioneta extends Vehiculo {
+    public Camioneta(
             String marca,
             String modelo,
             String color,

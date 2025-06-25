@@ -15,8 +15,7 @@ public abstract class Vehiculo {
             String color,
             String numeroChasis,
             String numeroMotor,
-            double precioBase,
-            DetallesPago estrategiaImpuestos) {
+            double precioBase) {
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
