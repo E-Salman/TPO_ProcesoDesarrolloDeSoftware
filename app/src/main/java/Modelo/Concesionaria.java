@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import Estado.EstadoPedido;
+import EstrategiaEntrega.EntregaADomicilio;
+import EstrategiaEntrega.EntregaEnConcesionaria;
 import EstrategiaEntrega.EstrategiaEntrega;
 import FormaPago.FormaPago;
 import FormaPago.PagoContado;
@@ -16,15 +18,9 @@ import Usuario.Administrador;
 import Usuario.Comprador;
 import Usuario.CreadorAdministrador;
 import Usuario.CreadorComprador;
-import Usuario.CreadorUsuario;
 import Usuario.CreadorVendedor;
 import Usuario.Usuario;
 import Usuario.Vendedor;
-import Vehiculos.Auto;
-import Vehiculos.Camion;
-import Vehiculos.Camioneta;
-import Vehiculos.CreadorAuto;
-import Vehiculos.Moto;
 import Vehiculos.Vehiculo;
 
 public class Concesionaria {
@@ -46,7 +42,7 @@ public class Concesionaria {
         gestorPedidos = new GestorPedidos();
         usuarios = new ArrayList<Usuario>();
         clientes = new ArrayList<Cliente>();
-        creadorAdministrador = new CreadorAdministrador();
+        creadorAdministrador = new CreadorAdministrador(new ReportesPedidos(gestorPedidos));
         creadorComprador = new CreadorComprador();
         creadorVendedor = new CreadorVendedor();
     }
@@ -103,6 +99,15 @@ public class Concesionaria {
                 break;
 
             case "comprador":
+                System.out.print("Ingrese apellido del cliente: ");
+                String apellido = sc.nextLine();
+
+                System.out.print("Ingrese DNI del cliente: ");
+                String dni = sc.nextLine();
+
+                System.out.print("Ingrese telefono del cliente: ");
+                String telefono = sc.nextLine();
+                creadorComprador.setCliente(new Cliente(nombre, apellido, dni, email, telefono));
                 nuevo = creadorComprador.crearUsuario(nombre, email);
                 break;
 
@@ -215,7 +220,7 @@ public class Concesionaria {
         System.out.println("¿Es un nuevo cliente?");
         String nCliente = sc.nextLine();
 
-        Cliente clientePedido;
+        Cliente clientePedido = null;
         if (nCliente.equalsIgnoreCase("no")) {
             System.out.println("\nIngrese el email del cliente");
             String emailTemp = sc.nextLine();
@@ -226,11 +231,9 @@ public class Concesionaria {
                 }
             }
             if (clientePedido == null)
-                break;
+                return;
 
         } else {
-
-            // Ingreso de Cliente
             System.out.print("Ingrese nombre del cliente: ");
             String nombre = sc.nextLine();
 
@@ -245,10 +248,12 @@ public class Concesionaria {
 
             System.out.print("Ingrese telefono del cliente: ");
             String telefono = sc.nextLine();
-
+            
             clientePedido = new Cliente(nombre, apellido, dni, email, telefono);
+            creadorComprador.setCliente(clientePedido);
+            creadorComprador.crearUsuario(nombre, email);
         }
-        // Selección de vehículo
+        
         System.out.println("\nVehículos disponibles:");
         List<Vehiculo> disponibles = catalogoVehiculos.getVehiculos();
         for (int i = 0; i < disponibles.size(); i++) {
@@ -259,17 +264,17 @@ public class Concesionaria {
         sc.nextLine();
         Vehiculo vehiculoSeleccionado = disponibles.get(indexVehiculo);
 
-        // Estrategia de entrega
         System.out.println("\nSeleccione tipo de entrega:");
         System.out.println("1. Retiro en concesionaria");
         System.out.println("2. Envío a domicilio");
         int tipoEntrega = sc.nextInt();
         sc.nextLine();
-        EstrategiaEntrega estrategiaEntrega = (tipoEntrega == 1)
-                ? new RetiroEnConcesionaria()
-                : new EnvioADomicilio();
-
-        // Forma de pago
+        EstrategiaEntrega estrategiaEntrega;
+            if (tipoEntrega == 1) {
+                estrategiaEntrega = new EntregaEnConcesionaria();
+            } else {
+                estrategiaEntrega = new EntregaADomicilio();
+}
         System.out.println("\nSeleccione forma de pago:");
         System.out.println("1. Tarjeta");
         System.out.println("2. Transferencia");
@@ -286,19 +291,14 @@ public class Concesionaria {
             }
         };
 
-        // Datos de facturación
+        System.out.println("Razon social: ");
+        String razonSocial = sc.nextLine();
         System.out.print("CUIT para facturación: ");
         String cuit = sc.nextLine();
-        System.out.print("Condición frente al IVA: ");
-        String condicionIVA = sc.nextLine();
-        DatosFacturacion datosFact = new DatosFacturacion(cuit, condicionIVA);
+        System.out.print("Direccion: ");
+        String direccion = sc.nextLine();
+        DatosFacturacion datosFact = new DatosFacturacion(razonSocial,direccion,cuit);
 
-        // Selección de vendedor (simplificada)
-        System.out.println("\nIngrese nombre del vendedor asignado: ");
-        String nombreVendedor = sc.nextLine();
-        Vendedor vendedor = new Vendedor(nombreVendedor);
-
-        // Opcionales
         System.out.println("\n¿Desea agregar equipamiento extra? (s/n): ");
         boolean equipamiento = sc.nextLine().equalsIgnoreCase("s");
 
@@ -308,14 +308,13 @@ public class Concesionaria {
         System.out.println("¿Desea accesorios? (s/n): ");
         boolean accesorios = sc.nextLine().equalsIgnoreCase("s");
 
-        // Registrar pedido
         gestorPedidos.crearPedido(
-                cliente,
+                clientePedido,
                 vehiculoSeleccionado,
                 estrategiaEntrega,
                 formaPago,
                 datosFact,
-                vendedor,
+                (Vendedor)usuarioLogueado,
                 equipamiento,
                 garantia,
                 accesorios);
@@ -375,90 +374,6 @@ public class Concesionaria {
                     System.out.println("Opción inválida");
             }
         }
-    }
-
-    public void menuLogueado() {
-        Scanner sc = new Scanner(System.in);
-        int opcion;
-
-        do {
-            System.out.println("\n=== SISTEMA DE CONCESIONARIA ===");
-            System.out.println("1. Listar vehículos");
-            System.out.println("2. Agregar vehículo");
-            System.out.println("3. Registrar pedido");
-            System.out.println("4. Consultar pedidos");
-            System.out.println("0. Salir");
-            System.out.print("Elija una opción: ");
-
-            opcion = sc.nextInt();
-            sc.nextLine(); // Limpiar buffer
-
-            switch (opcion) {
-                case 1:
-                    catalogoVehiculos.toString();
-                    break;
-
-                case 2:
-                    System.out.print("Ingrese tipo (Auto/Camion/Camioneta/Moto): ");
-                    String tipo = sc.nextLine();
-                    System.out.print("Ingrese modelo: ");
-                    String modelo = sc.nextLine();
-                    System.out.print("Ingrese marca: ");
-                    String marca = sc.nextLine();
-                    System.out.print("Ingrese el numero de chasis: ");
-                    String chasis = sc.nextLine();
-                    System.out.print("Ingrese el numero del motor: ");
-                    String motor = sc.nextLine();
-                    System.out.print("Ingrese el color del auto: ");
-                    String color = sc.nextLine();
-                    System.out.print("Ingrese precio: ");
-                    double precio = sc.nextDouble();
-                    sc.nextLine();
-
-                    switch (tipo.toLowerCase()) {
-                        case "auto":
-                            gestorVehiculos.registrarVehiculo(new Auto(marca, modelo, color, chasis, motor, precio));
-                            break;
-
-                        case "camion":
-                            gestorVehiculos.registrarVehiculo(new Camion(marca, modelo, color, chasis, motor, precio));
-                            break;
-
-                        case "camioneta":
-                            gestorVehiculos
-                                    .registrarVehiculo(new Camioneta(marca, modelo, color, chasis, motor, precio));
-                            break;
-
-                        case "moto":
-                            gestorVehiculos.registrarVehiculo(new Moto(marca, modelo, color, chasis, motor, precio));
-                            break;
-
-                        default:
-                            break;
-                    }
-                    break;
-
-                case 3:
-                    System.out.print("Ingrese DNI del cliente: ");
-                    String dni = sc.nextLine();
-                    gestorPedidos.crearPedido(null, null, null, null, null, null, false, false, false);
-                    break;
-
-                case 4:
-                    gestorPedidos.listarPedidos()();
-                    break;
-
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-
-                default:
-                    System.out.println("Opción no válida.");
-            }
-
-        } while (opcion != 0);
-
-        sc.close();
     }
 
     public String getNombre() {
