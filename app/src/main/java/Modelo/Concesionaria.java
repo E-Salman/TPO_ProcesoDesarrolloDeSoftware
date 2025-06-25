@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import Estado.EstadoPedido;
@@ -169,8 +170,9 @@ public class Concesionaria {
             System.out.println("\n--- Menú Administrador ---");
             System.out.println("1. Listar vehículos");
             System.out.println("2. Registrar pedido");
-            System.out.println("3. Ver todos los pedidos");
+            System.out.println("3. Ver todos los pedidos");            
             System.out.println("4. Generar informe");
+            System.out.println("5. Ver todos los usuarios");
             System.out.println("0. Cerrar sesión");
 
             opcion = sc.nextInt();
@@ -188,6 +190,11 @@ public class Concesionaria {
                     break;
                 case 4:
                     menuGenerarInforme();
+                    break;
+                case 5:
+                    System.out.println(usuarios.toString());
+                    break;
+                default:
                     break;
             }
         } while (opcion != 0);
@@ -222,13 +229,28 @@ public class Concesionaria {
         do {
             System.out.println("\n--- Menú Vendedor ---");
             System.out.println("1. Ver vehículos disponibles");
+            System.out.println("2. Registrar pedido");
+            System.out.println("3. Listar pedidos");
             System.out.println("0. Cerrar sesión");
 
             opcion = sc.nextInt();
             sc.nextLine();
-
-            if (opcion == 1) {
-                catalogoVehiculos.toString();
+            
+            switch (opcion) {
+                case 1:
+                    System.out.println(catalogoVehiculos.toString());
+                    break;
+                
+                case 2:
+                    registrarPedido(sc);
+                    break;
+                    
+                case 3:
+                    System.out.println(gestorPedidos.listarPedidos().toString());
+                    break;
+                                
+                default:
+                    break;
             }
         } while (opcion != 0);
     }
@@ -284,6 +306,15 @@ public class Concesionaria {
         int indexVehiculo = sc.nextInt();
         sc.nextLine();
         Vehiculo vehiculoSeleccionado = disponibles.get(indexVehiculo);
+        
+        Optional<PedidoCompra> resultado = gestorPedidos.buscarPedidoPorVehiculo(vehiculoSeleccionado);
+        PedidoCompra pedidoSeleccionado = null;
+        if (resultado.isPresent()) {
+        pedidoSeleccionado = resultado.get();
+        System.out.println("Pedido Encontrado");
+            } else {
+        System.out.println("No existe ningún pedido para ese vehículo.");
+            }
 
         System.out.println("\nSeleccione tipo de entrega:");
         System.out.println("1. Retiro en concesionaria");
@@ -302,11 +333,12 @@ public class Concesionaria {
         System.out.println("3. Pago contado");
         int tipoPago = sc.nextInt();
         sc.nextLine();
+
         FormaPago formaPago = switch (tipoPago) {
-            case 1 -> new PagoTarjeta();
-            case 2 -> new PagoTransferencia();
-            case 3 -> new PagoContado();
-            default -> {
+            case 1 : new PagoTarjeta(); gestorPedidos.cambiarEstado(pedidoSeleccionado, "Confirmado");
+            case 2 : new PagoTransferencia(); gestorPedidos.cambiarEstado(pedidoSeleccionado, "Confirmado");
+            case 3 : new PagoContado(); gestorPedidos.cambiarEstado(pedidoSeleccionado, "Confirmado");
+            default : {
                 System.out.println("Forma de pago inválida. Se usará contado.");
                 yield new PagoContado();
             }

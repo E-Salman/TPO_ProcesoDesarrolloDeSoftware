@@ -7,13 +7,6 @@ import Vehiculos.Auto;
 import Vehiculos.Camion;
 import Vehiculos.Camioneta;
 import Vehiculos.Moto;
-import EstrategiaEntrega.EntregaADomicilio;
-import EstrategiaEntrega.EntregaEnConcesionaria;
-import EstrategiaEntrega.EstrategiaEntrega;
-import FormaPago.FormaPago;
-import FormaPago.PagoContado;
-import FormaPago.PagoTarjeta;
-import FormaPago.PagoTransferencia;
 
 public class Main {
     public static void main(String[] args) {

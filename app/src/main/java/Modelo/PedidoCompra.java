@@ -102,6 +102,7 @@ public class PedidoCompra {
             estadoActual = temp;
             historialEstados.add(estadoActual);
         }
+        notificarObservadores();
     }
 
     public void cambiarEstrategia(EstrategiaEntrega estrategiaEntrega) {

@@ -3,6 +3,7 @@ package Modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.NotificadorArea;
@@ -45,5 +46,12 @@ public class GestorPedidos {
             }
         }
         return listaPedidoComprador;
+    }
+
+    public Optional<PedidoCompra> buscarPedidoPorVehiculo(Vehiculo vehiculoElBuscado) {
+        return pedidos.stream()
+            .filter(p -> p.getVehiculo().getNumeroChasis()
+                             .equals(vehiculoElBuscado.getNumeroChasis()))
+            .findFirst();
     }
 }
