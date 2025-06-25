@@ -47,6 +47,22 @@ public class Concesionaria {
         creadorVendedor = new CreadorVendedor();
     }
 
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
     public void iniciarInterfaz() {
         Scanner sc = new Scanner(System.in);
 
