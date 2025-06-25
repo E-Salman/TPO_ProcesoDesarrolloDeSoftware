@@ -37,4 +37,11 @@ public class CatalogoVehiculos {
                 .findFirst();
     }
 
+    public String toString(){
+        String retVal = "";
+        for (Vehiculo vehiculo : vehiculos){
+            retVal += vehiculo.toString();
+        }
+        return retVal;
+    }
 }
