@@ -6,7 +6,7 @@ import Modelo.Cliente;
 import Modelo.PedidoCompra;
 
 public class Comprador extends Usuario {
-    private final Cliente cliente;
+    private Cliente cliente;
     public Comprador(String nombre, String email, Cliente cliente) {
         super(nombre, email);
         this.cliente = cliente;

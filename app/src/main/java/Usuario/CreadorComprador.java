@@ -3,10 +3,16 @@ package Usuario;
 import Modelo.Cliente;
 
 public class CreadorComprador extends CreadorUsuario {
-  private final Cliente cliente;
+  private Cliente cliente;
+
+  public CreadorComprador(){}
 
   public CreadorComprador(Cliente c) {
     this.cliente = c;
+  }
+
+  public void setCliente(Cliente cliente){
+    this.cliente = cliente;
   }
 
   @Override
