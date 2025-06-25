@@ -1,4 +1,5 @@
 package Modelo;
+
 public class Cliente {
     private String nombre;
     private String apellido;
@@ -61,14 +62,9 @@ public class Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-<<<<<<< HEAD:app/src/Cliente.java
 
     public EstrategiaEntrega getEstrategiaEntrega() {
         return estrategiaEntrega;
     }
 
 }
-"buenas tardes mundo"
-=======
-}
->>>>>>> 53f1fb0e89bae2ccbc13305d75ce61cfe824fe0a:app/src/main/java/Modelo/Cliente.java
