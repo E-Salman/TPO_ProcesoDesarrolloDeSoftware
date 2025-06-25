@@ -13,6 +13,7 @@ import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.Observador;
+import Usuario.Vendedor;
 import Vehiculos.Vehiculo;
 import FormaPago.FormaPago;
 
@@ -26,12 +27,19 @@ public class PedidoCompra {
     private List<Observador> observadores;
     private EstrategiaEntrega estrategiaEntrega;
     private FormaPago formaPago;
+    private DatosFacturacion datosFacturacion;
+    private Vendedor vendedor;
+    private boolean equipamientoExtra;
+    private boolean garantiaExtendida;
+    private boolean accesorios;
+    private AreaResponsable areaResponsableActual;
     private DetallesPago detallesPago;
 
 
 
     public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
-            FormaPago formaPago) {
+            FormaPago formaPago, DatosFacturacion datosFacturacion, Vendedor vendedor, boolean equipamientoExtra,
+            boolean garantiaExtendida, boolean accesorios) {
         this.numero = numero;
         estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
@@ -42,6 +50,12 @@ public class PedidoCompra {
         observadores = new ArrayList<Observador>();
         this.estrategiaEntrega = estrategiaEntrega;
         this.formaPago = formaPago;
+        this.datosFacturacion = datosFacturacion;
+        this.vendedor = vendedor;
+        this.equipamientoExtra = equipamientoExtra;
+        this.garantiaExtendida = garantiaExtendida;
+        this.accesorios = accesorios;
+        this.areaResponsableActual = AreaResponsable.VENTAS;
 
         switch (vehiculo.getClass().getName()){
             case "Auto":
@@ -158,6 +172,62 @@ public class PedidoCompra {
 
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    public void setEstadoActual(EstadoPedido estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public DatosFacturacion getDatosFacturacion() {
+        return datosFacturacion;
+    }
+
+    public void setDatosFacturacion(DatosFacturacion datosFacturacion) {
+        this.datosFacturacion = datosFacturacion;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public boolean isEquipamientoExtra() {
+        return equipamientoExtra;
+    }
+
+    public void setEquipamientoExtra(boolean equipamientoExtra) {
+        this.equipamientoExtra = equipamientoExtra;
+    }
+
+    public boolean isGarantiaExtendida() {
+        return garantiaExtendida;
+    }
+
+    public void setGarantiaExtendida(boolean garantiaExtendida) {
+        this.garantiaExtendida = garantiaExtendida;
+    }
+
+    public boolean isAccesorios() {
+        return accesorios;
+    }
+
+    public void setAccesorios(boolean accesorios) {
+        this.accesorios = accesorios;
+    }
+
+    public AreaResponsable getAreaResponsableActual() {
+        return areaResponsableActual;
+    }
+
+    public void setAreaResponsableActual(AreaResponsable areaResponsableActual) {
+        this.areaResponsableActual = areaResponsableActual;
     }
 
 }
