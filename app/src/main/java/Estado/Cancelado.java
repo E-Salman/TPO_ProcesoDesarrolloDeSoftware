@@ -9,7 +9,7 @@ public class Cancelado implements EstadoPedido {
     public EstadoPedido cambiar(String nEstado) {
         switch (nEstado.toLowerCase()) {
             case "reservado":
-                return new Cancelado();
+                return new Reservado();
 
             case "confirmado":
                 return new Confirmado();

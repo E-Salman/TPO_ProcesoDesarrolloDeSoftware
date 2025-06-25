@@ -14,9 +14,6 @@ public abstract class DetallesPago  {
         impProvincial = 0.05;
     }
 
-    public DetallesPago(double precio){
-        precioBase = precio;
-    }
 
     protected void calcularTotal(){
         precioTotal = precioBase + precioBase * impNacional + precioBase * impProvincial + precioBase * impProvincialAdicional;

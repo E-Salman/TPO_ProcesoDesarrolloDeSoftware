@@ -9,10 +9,10 @@ public class Confirmado implements EstadoPedido {
     public EstadoPedido cambiar(String nEstado) {
         switch (nEstado.toLowerCase()) {
             case "reservado":
-                return new Cancelado();
+                return new Reservado();
 
             case "cancelado":
-                return new Confirmado();
+                return new Cancelado();
 
             default:
                 break;
