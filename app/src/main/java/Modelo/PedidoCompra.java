@@ -40,6 +40,7 @@ public class PedidoCompra {
     public PedidoCompra(int numero, Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
             FormaPago formaPago, DatosFacturacion datosFacturacion, Vendedor vendedor, boolean equipamientoExtra,
             boolean garantiaExtendida, boolean accesorios) {
+                
         this.numero = numero;
         estadoActual = new Reservado();
         historialEstados = new ArrayList<EstadoPedido>();
