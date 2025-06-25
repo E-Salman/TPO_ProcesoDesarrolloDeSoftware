@@ -14,7 +14,6 @@ import FormaPago.FormaPago;
 import FormaPago.PagoContado;
 import FormaPago.PagoTarjeta;
 import FormaPago.PagoTransferencia;
-import Modelo.ReportesPedidos;
 
 public class Main {
     public static void main(String[] args) {

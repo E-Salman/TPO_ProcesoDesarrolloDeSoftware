@@ -38,7 +38,7 @@ public class Concesionaria {
 
     public Concesionaria() {
         catalogoVehiculos = new CatalogoVehiculos();
-        gestorVehiculos = new GestorVehiculos();
+        gestorVehiculos = new GestorVehiculos(catalogoVehiculos);
         gestorPedidos = new GestorPedidos();
         usuarios = new ArrayList<Usuario>();
         clientes = new ArrayList<Cliente>();

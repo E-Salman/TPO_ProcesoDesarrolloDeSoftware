@@ -6,10 +6,17 @@ import Vehiculos.Vehiculo;
 
 public class GestorVehiculos {
 
-    private final CatalogoVehiculos catalogo;
+    private CatalogoVehiculos catalogo;
 
     public GestorVehiculos() {
         catalogo = new CatalogoVehiculos();
+    }
+
+    public GestorVehiculos(CatalogoVehiculos catalogo) {
+        System.out.println(catalogo.toString());
+        System.out.println(this.catalogo);         
+        this.catalogo = new CatalogoVehiculos();
+        System.out.println(this.catalogo.toString());
     }
 
     public void registrarVehiculo(Vehiculo v) {
