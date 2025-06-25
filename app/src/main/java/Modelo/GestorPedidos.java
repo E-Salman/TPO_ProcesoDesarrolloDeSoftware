@@ -7,6 +7,7 @@ import java.util.List;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.NotificadorArea;
 import Observador.NotificadorCliente;
+import Usuario.Vendedor;
 import Vehiculos.Vehiculo;
 import FormaPago.FormaPago;
 
@@ -14,8 +15,10 @@ public class GestorPedidos {
     private final List<PedidoCompra> pedidos = new ArrayList<>();
 
     public void crearPedido(Cliente cliente, Vehiculo vehiculo, EstrategiaEntrega estrategiaEntrega,
-            FormaPago formaPago) {
-        PedidoCompra pedido = new PedidoCompra((pedidos.size()), cliente, vehiculo, estrategiaEntrega, formaPago);
+            FormaPago formaPago, DatosFacturacion datosFacturacion, Vendedor vendedor, boolean equipamientoExtra,
+            boolean garantiaExtendida, boolean accesorios) {
+        PedidoCompra pedido = new PedidoCompra((pedidos.size()), cliente, vehiculo, estrategiaEntrega, formaPago,
+                datosFacturacion, vendedor, equipamientoExtra, garantiaExtendida, accesorios);
         NotificadorCliente nc = new NotificadorCliente(cliente);
         pedido.agregarObservador(nc);
         NotificadorArea na = new NotificadorArea();
