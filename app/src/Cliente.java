@@ -6,7 +6,6 @@ public class Cliente {
     private String documento;
     private String email;
     private String telefono;
-    private EstrategiaEntrega estrategiaEntrega;
 
     public Cliente(String nombre, String apellido, String documento, String email, String telefono) {
         this.nombre = nombre;
@@ -22,18 +21,6 @@ public class Cliente {
                 && documento != null && !documento.isEmpty()
                 && email != null && !email.isEmpty()
                 && telefono != null && !telefono.isEmpty();
-    }
-
-    public void setEstrategiaEntrega(EstrategiaEntrega estrategiaEntrega) {
-        this.estrategiaEntrega = estrategiaEntrega;
-    }
-
-    public void realizarEntrega() {
-        if (estrategiaEntrega != null) {
-            estrategiaEntrega.entregar();
-        } else {
-            System.out.println("No se ha definido una estrategia de entrega.");
-        }
     }
 
     public String getNombre() {

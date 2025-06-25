@@ -8,6 +8,7 @@ public class PedidoCompra {
     private Cliente cliente;
     private Vehiculo vehiculo;
     private List<Observador> observadores;
+    private EstrategiaEntrega estrategiaEntrega;
 
     public PedidoCompra(int numero, EstadoPedido estadoActual) {
         this.numero = numero;
