@@ -1,22 +1,23 @@
+package Estado;
+
 public class Confirmado implements EstadoPedido {
 
     public String estado() {
         return "Confirmado";
     }
 
-    public void cambiar(EstadoPedido nEstado) {
+    public EstadoPedido cambiar(String nEstado) {
         switch (nEstado.toLowerCase()) {
             case "reservado":
-                this.estadoActual = new Cancelado();
-                break;
+                return new Cancelado();
 
             case "cancelado":
-                this.estadoActual = new Confirmado();
-                break;
+                return new Confirmado();
 
             default:
                 break;
         }
+        return null;
     }
 
 }

@@ -1,4 +1,5 @@
-package tpo_procesodesarrollodesoftware;
+package Modelo;
+
 
 public abstract class CreadorUsuario {
     public abstract Usuario crearUsuario(String nombre, String email);

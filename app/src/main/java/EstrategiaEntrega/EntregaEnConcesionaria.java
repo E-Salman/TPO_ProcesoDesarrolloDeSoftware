@@ -1,4 +1,4 @@
-package tpo_procesodesarrollodesoftware;
+package EstrategiaEntrega;
 
 public class EntregaEnConcesionaria implements EstrategiaEntrega {
 

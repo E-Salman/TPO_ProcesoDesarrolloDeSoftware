@@ -1,6 +1,8 @@
-import java.util.Observer;
+package Observador;
+import Modelo.Cliente;
+import Modelo.PedidoCompra;
 
-public class NotificadorCliente implements Observer {
+public class NotificadorCliente implements Observador {
     private final Cliente cliente;
 
     public NotificadorCliente(Cliente cliente) {
@@ -12,8 +14,8 @@ public class NotificadorCliente implements Observer {
         String mensaje = String.format(
                 "Hola %s, tu pedido %d ahora está en estado: %s",
                 cliente.getNombre(),
-                pedido.getId(),
-                pedido.getEstadoActual().getNombreEstado());
+                pedido.getNumero(),
+                pedido.getEstadoActual());
         enviarCorreo(cliente.getEmail(), mensaje);
     }
 
