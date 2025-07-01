@@ -13,8 +13,8 @@ import Estado.EstadoPedido;
 import Estado.Reservado;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.Observador;
+import Usuario.Cliente;
 import Usuario.Usuario;
-import Usuario.Vendedor;
 import Vehiculos.Vehiculo;
 import FormaPago.FormaPago;
 

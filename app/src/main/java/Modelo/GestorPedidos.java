@@ -8,7 +8,7 @@ import java.util.Optional;
 import EstrategiaEntrega.EstrategiaEntrega;
 import Observador.NotificadorArea;
 import Observador.NotificadorCliente;
-import Usuario.Comprador;
+import Usuario.Cliente;
 import Usuario.Usuario;
 import Vehiculos.Vehiculo;
 import FormaPago.FormaPago;
@@ -22,7 +22,7 @@ public class GestorPedidos {
 
         PedidoCompra pedido = new PedidoCompra((pedidos.size()), cliente, vehiculo, estrategiaEntrega, formaPago,
                 datosFacturacion, vendedor, equipamientoExtra, garantiaExtendida, accesorios);
-                
+
         NotificadorCliente nc = new NotificadorCliente(cliente);
         pedido.agregarObservador(nc);
         NotificadorArea na = new NotificadorArea();
@@ -38,10 +38,10 @@ public class GestorPedidos {
         return Collections.unmodifiableList(pedidos);
     }
 
-    public List<PedidoCompra> listarPedidosComprador(Comprador comprador){
+    public List<PedidoCompra> listarPedidosCliente(Cliente cliente) {
         List<PedidoCompra> listaPedidoComprador = new ArrayList<PedidoCompra>();
-        for (PedidoCompra p : pedidos){
-            if (p.getCliente().equals(comprador.getCliente())){
+        for (PedidoCompra p : pedidos) {
+            if (p.getCliente().equals(cliente)) {
                 listaPedidoComprador.add(p);
             }
         }
@@ -50,8 +50,8 @@ public class GestorPedidos {
 
     public Optional<PedidoCompra> buscarPedidoPorVehiculo(Vehiculo vehiculoElBuscado) {
         return pedidos.stream()
-            .filter(p -> p.getVehiculo().getNumeroChasis()
-                             .equals(vehiculoElBuscado.getNumeroChasis()))
-            .findFirst();
+                .filter(p -> p.getVehiculo().getNumeroChasis()
+                        .equals(vehiculoElBuscado.getNumeroChasis()))
+                .findFirst();
     }
 }

@@ -1,17 +1,48 @@
-package Modelo;
-public class Cliente {
+package Usuario;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Modelo.PedidoCompra;
+
+public class Cliente extends Usuario{
     private String nombre;
     private String apellido;
     private String documento;
     private String email;
     private String telefono;
+    private String cuit;
+    public String getCuit() {
+        return cuit;
+    }
 
-    public Cliente(String nombre, String apellido, String documento, String email, String telefono) {
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
+
+    public List<PedidoCompra> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<PedidoCompra> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    private List<PedidoCompra> pedidos;
+
+    public Cliente(String nombre, String apellido, String documento, String email, String telefono, String cuit) {     
+        super(nombre, email);   
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
         this.email = email;
         this.telefono = telefono;
+        this.cuit = cuit;
+        pedidos = new ArrayList<PedidoCompra>();
+    }
+
+    public void agregarPedido(PedidoCompra pedido){
+        pedidos.add(pedido);
     }
 
     public boolean validarDatos() {

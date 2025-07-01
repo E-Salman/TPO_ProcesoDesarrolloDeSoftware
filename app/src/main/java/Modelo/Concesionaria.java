@@ -18,10 +18,7 @@ import FormaPago.PagoContado;
 import FormaPago.PagoTarjeta;
 import FormaPago.PagoTransferencia;
 import Usuario.Administrador;
-import Usuario.Comprador;
-import Usuario.CreadorAdministrador;
-import Usuario.CreadorComprador;
-import Usuario.CreadorVendedor;
+import Usuario.Cliente;
 import Usuario.Usuario;
 import Usuario.Vendedor;
 import Vehiculos.Vehiculo;
@@ -34,10 +31,8 @@ public class Concesionaria {
     private GestorPedidos gestorPedidos;
     private List<Cliente> clientes;
     private List<Usuario> usuarios;
-    private CreadorAdministrador creadorAdministrador;
-    private CreadorComprador creadorComprador;
-    private CreadorVendedor creadorVendedor;
     private Usuario usuarioLogueado;
+    private ReportesPedidos reportador;
 
     public Concesionaria() {
         catalogoVehiculos = new CatalogoVehiculos();
@@ -45,9 +40,8 @@ public class Concesionaria {
         gestorPedidos = new GestorPedidos();
         usuarios = new ArrayList<Usuario>();
         clientes = new ArrayList<Cliente>();
-        creadorAdministrador = new CreadorAdministrador(new ReportesPedidos(gestorPedidos));
-        creadorComprador = new CreadorComprador();
-        creadorVendedor = new CreadorVendedor();
+        reportador = new ReportesPedidos(gestorPedidos);
+        CUIT = "ConcesionariaPH";
     }
 
     public List<Cliente> getClientes() {
@@ -75,13 +69,22 @@ public class Concesionaria {
             System.out.println("2. Iniciar sesión");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
-            int opcion = sc.nextInt();
+            int opcion = -1;
+            try {
+                System.out.println("Entrada inválida. Ingrese un númersadzxo.");
+                opcion = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Ingrese un número.");
+                sc.nextLine();
+                continue;
+            }
             sc.nextLine();
 
             switch (opcion) {
                 case 1:
                     registrarUsuario(sc);
                     break;
+
                 case 2:
                     Usuario usuario = login(sc);
                     if (usuario != null) {
@@ -89,11 +92,14 @@ public class Concesionaria {
                         mostrarMenuPorPerfil(usuario, sc);
                     }
                     break;
+                    
                 case 0:
                     System.out.println("Hasta luego.");
                     return;
+
                 default:
                     System.out.println("Opción inválida.");
+                    break;
             }
         }
     }
@@ -110,14 +116,14 @@ public class Concesionaria {
 
         switch (tipo) {
             case "admin":
-                nuevo = creadorAdministrador.crearUsuario(nombre, email);
+                nuevo = new Administrador(nombre, email);
                 break;
 
             case "vendedor":
-                nuevo = creadorVendedor.crearUsuario(nombre, email);
+                nuevo = new Vendedor(nombre, email);
                 break;
 
-            case "comprador":
+            case "cliente":
                 System.out.print("Ingrese apellido del cliente: ");
                 String apellido = sc.nextLine();
 
@@ -126,8 +132,11 @@ public class Concesionaria {
 
                 System.out.print("Ingrese telefono del cliente: ");
                 String telefono = sc.nextLine();
-                creadorComprador.setCliente(new Cliente(nombre, apellido, dni, email, telefono));
-                nuevo = creadorComprador.crearUsuario(nombre, email);
+
+                System.out.print("Ingrese cuit del cliente: ");
+                String cuit = sc.nextLine();
+
+                nuevo = new Cliente(nombre, apellido, dni, email, telefono, cuit);
                 break;
 
             default:
@@ -157,8 +166,8 @@ public class Concesionaria {
     private void mostrarMenuPorPerfil(Usuario usuario, Scanner sc) {
         if (usuario instanceof Administrador) {
             menuAdministrador(sc);
-        } else if (usuario instanceof Comprador) {
-            menuComprador((Comprador) usuario, sc);
+        } else if (usuario instanceof Cliente) {
+            menuComprador((Cliente) usuario, sc);
         } else if (usuario instanceof Vendedor) {
             menuVendedor(sc);
         }
@@ -174,8 +183,14 @@ public class Concesionaria {
             System.out.println("4. Generar informe");
             System.out.println("5. Ver todos los usuarios");
             System.out.println("0. Cerrar sesión");
-
-            opcion = sc.nextInt();
+            opcion = -1;
+            try {
+                opcion = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Ingrese un número.");
+                sc.nextLine();
+                continue;
+            }
             sc.nextLine();
 
             switch (opcion) {
@@ -200,15 +215,21 @@ public class Concesionaria {
         } while (opcion != 0);
     }
 
-    private void menuComprador(Comprador comprador, Scanner sc) {
+    private void menuComprador(Cliente cliente, Scanner sc) {
         int opcion;
         do {
             System.out.println("\n--- Menú Comprador ---");
             System.out.println("1. Ver vehículos disponibles");
             System.out.println("2. Ver mis pedidos");
             System.out.println("0. Cerrar sesión");
-
-            opcion = sc.nextInt();
+            opcion = -1;
+            try {
+                opcion = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Ingrese un número.");
+                sc.nextLine();
+                continue;
+            }
             sc.nextLine();
 
             switch (opcion) {
@@ -218,7 +239,7 @@ public class Concesionaria {
                     break;
 
                 case 2:
-                    System.out.println(gestorPedidos.listarPedidosComprador(comprador).toString());
+                    System.out.println(gestorPedidos.listarPedidosCliente(cliente).toString());
                     break;
             }
         } while (opcion != 0);
@@ -232,8 +253,14 @@ public class Concesionaria {
             System.out.println("2. Registrar pedido");
             System.out.println("3. Listar pedidos");
             System.out.println("0. Cerrar sesión");
-
-            opcion = sc.nextInt();
+            opcion = -1;
+            try {
+                opcion = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Ingrese un número.");
+                sc.nextLine();
+                continue;
+            }
             sc.nextLine();
             
             switch (opcion) {
@@ -292,9 +319,10 @@ public class Concesionaria {
             System.out.print("Ingrese telefono del cliente: ");
             String telefono = sc.nextLine();
 
-            clientePedido = new Cliente(nombre, apellido, dni, email, telefono);
-            creadorComprador.setCliente(clientePedido);
-            creadorComprador.crearUsuario(nombre, email);
+            System.out.print("Ingrese cuit del cliente: ");
+            String cuit = sc.nextLine();
+
+            clientePedido = new Cliente(nombre, apellido, dni, email, telefono, cuit);
         }
 
         System.out.println("\nVehículos disponibles:");
@@ -409,7 +437,7 @@ public class Concesionaria {
                     //String rutaCsv = "C:\\temp\\reporte.csv";
 
                     try {
-                        ((Administrador) usuarioLogueado).generarInformeCSV(desde, hasta, estado, rutaCsv);
+                        generarInformeCSV(desde, hasta, estado, rutaCsv);
                         System.out.println("Informe CSV generado en " + rutaCsv);
                     } catch (IOException e) {
                         System.err.println("Error al exportar CSV: " + e.getMessage());
@@ -424,7 +452,7 @@ public class Concesionaria {
                     String rutaTxt = sc.nextLine();
 
                     try {
-                        ((Administrador) usuarioLogueado).generarInformeTXT(d2, h2, estado, rutaTxt);
+                        generarInformeTXT(d2, h2, estado, rutaTxt);
                         System.out.println("Informe TXT generado en " + rutaTxt);
                     } catch (IOException e) {
                         System.err.println("Error al exportar TXT: " + e.getMessage());
@@ -479,4 +507,27 @@ public class Concesionaria {
     public void setGestorPedidos(GestorPedidos gestorPedidos) {
         this.gestorPedidos = gestorPedidos;
     }
+
+        public List<PedidoCompra> generarInforme(LocalDate desde,
+            LocalDate hasta,
+            EstadoPedido estado) {
+        return reportador.generarInforme(desde, hasta, estado);
+    }
+
+    public void generarInformeCSV(LocalDate desde,
+            LocalDate hasta,
+            EstadoPedido estado,
+            String rutaArchivo) throws IOException {
+        List<PedidoCompra> pedidos = reportador.generarInforme(desde, hasta, estado);
+        reportador.exportarCSV(pedidos, rutaArchivo);
+    }
+
+    public void generarInformeTXT(LocalDate desde,
+            LocalDate hasta,
+            EstadoPedido estado,
+            String rutaArchivo) throws IOException {
+        List<PedidoCompra> pedidos = reportador.generarInforme(desde, hasta, estado);
+        reportador.exportarTXT(pedidos, rutaArchivo);
+    }
+
 }

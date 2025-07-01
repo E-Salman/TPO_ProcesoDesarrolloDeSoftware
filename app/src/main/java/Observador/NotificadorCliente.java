@@ -1,7 +1,7 @@
 package Observador;
 
-import Modelo.Cliente;
 import Modelo.PedidoCompra;
+import Usuario.Cliente;
 
 public class NotificadorCliente implements Observador {
     private final Cliente cliente;
